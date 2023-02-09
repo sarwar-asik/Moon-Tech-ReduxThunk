@@ -27,9 +27,20 @@ const Home = () => {
       <ProductCard key={product.model} product={product} />
     ))
   }
-  if(products.length && stock){
+  if(products.length && (stock || brands.length)){
     content = products
-    ?.filter(product =>product.status === true )?.map((product) => (
+    ?.filter(product=>{
+      if(product){
+       return brands.includes(product.brand)
+      }
+      return product
+    })
+    ?.filter(product =>{
+      if(brands.length){
+        return product.status === true 
+      }
+      return product
+    })?.map((product) => (
       <ProductCard key={product.model} product={product} />
     ))
   }
